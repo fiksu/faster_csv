@@ -1,4 +1,5 @@
 #!/usr/local/bin/ruby -w
+# -*- coding: utf-8 -*-
 
 # = faster_csv.rb -- Faster CSV Reading and Writing
 #
@@ -1800,7 +1801,9 @@ class FasterCSV
                                      Regexp::MULTILINE,
                                      @encoding ),
       # safer than chomp!()
-      :line_end       => Regexp.new("#{esc_row_sep}\\z", nil, @encoding)
+      # PATCH: old code doesn't support some microsoft csv formatted files
+      #   :line_end       => Regexp.new("#{esc_row_sep}\\z", nil, @encoding)
+      :line_end       => Regexp.new("(\r*\n+|\r)", nil, @encoding)
     }
   end
   
